@@ -6,7 +6,7 @@ flowchart TB
 (semi-îlotage)"]
   BAT[Batterie] <--> INV_ESS
 
-  GRID[Réseau public (GRD)] <--> MTR[Compteur (double flux / communicant)]
+  GRID["Réseau public (GRD)"] <--> MTR["Compteur (double flux / communicant)"]
   MTR <--> MAIN[Tableau principal maison]
 
   %% ============ CAS 1 : BATTERIE CLASSIQUE ============
@@ -20,10 +20,10 @@ INV_GRID s'arrête (anti-islanding)
 
   %% ============ CAS 2 : SEMI-ILOTAGE ============
   subgraph B["Cas B — Semi-îlotage (ESS / Backup)"]
-    INV_ESS --> BUS[AC Bus interne (réseau local)]
+    INV_ESS --> BUS["AC Bus interne (réseau local)"]
     BUS --> MAIN
     MAIN --> LOADS
-    MAIN --> CRIT[Tableau 'secours' / circuits critiques (option)]
+    MAIN --> CRIT["Tableau 'secours' / circuits critiques (option)"]
     SW["Contacteur / relais de découplage
 (anti-islanding)"] --- GRID
     SW --- BUS
