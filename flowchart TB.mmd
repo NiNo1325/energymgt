@@ -1,7 +1,9 @@
 flowchart TB
   %% ============ SOURCES ============
-  PV[Panneaux PV] --> INV_GRID[Onduleur grid-tied<br/>(classique)]
-  PV --> INV_ESS[Onduleur / chargeur ESS<br/>(semi-îlotage)]
+  PV[Panneaux PV] --> INV_GRID["Onduleur grid-tied
+(classique)"]
+  PV --> INV_ESS["Onduleur / chargeur ESS
+(semi-îlotage)"]
   BAT[Batterie] <--> INV_ESS
 
   GRID[Réseau public (GRD)] <--> MTR[Compteur (double flux / communicant)]
@@ -11,7 +13,9 @@ flowchart TB
   subgraph A["Cas A — Batterie 'classique' (grid-tied)"]
     INV_GRID --> MAIN
     MAIN --> LOADS[Charges maison]
-    noteA{{Blackout réseau :<br/>INV_GRID s'arrête (anti-islanding)<br/>=> maison OFF même avec PV+batterie}}
+    noteA{{"Blackout réseau :
+INV_GRID s'arrête (anti-islanding)
+=> maison OFF même avec PV+batterie"}}
   end
 
   %% ============ CAS 2 : SEMI-ILOTAGE ============
@@ -20,9 +24,13 @@ flowchart TB
     BUS --> MAIN
     MAIN --> LOADS
     MAIN --> CRIT[Tableau 'secours' / circuits critiques (option)]
-    SW[Contacteur / relais de découplage<br/>(anti-islanding)] --- GRID
+    SW["Contacteur / relais de découplage
+(anti-islanding)"] --- GRID
     SW --- BUS
-    noteB{{Blackout réseau :<br/>SW ouvre (déconnexion réseau)<br/>INV_ESS recrée un réseau local<br/>=> charges alimentées + PV continue}}
+    noteB{{"Blackout réseau :
+SW ouvre (déconnexion réseau)
+INV_ESS recrée un réseau local
+=> charges alimentées + PV continue"}}
   end
 
   %% ============ FLUX RESEAU ============
@@ -30,15 +38,22 @@ flowchart TB
 
   %% ============ FACTURATION / TARIFS ============
   subgraph C["Wallonie — Facturation réseau (simplifiée)"]
-    CHOICE{Choix / situation du prosumer} -->|Pas de compteur mesurant prélèvement/injection<br/>ou règles spécifiques| CAP[Tarif prosumer 'capacitaire' (forfait)<br/>lié à la puissance déclarée]
-    CHOICE -->|Compteur double flux / communicant| PROP[Tarif prosumer 'proportionnel / réel'<br/>lié à prélèvement + injection]
-    noteC{{Le semi-îlotage aide surtout à :<br/>↓ prélèvement réseau & ↓ injection<br/>(donc intéressant en 'proportionnel')}}
+    CHOICE{Choix / situation du prosumer} -->|"Pas de compteur mesurant
+prélèvement/injection
+ou règles spécifiques"| CAP["Tarif prosumer 'capacitaire' (forfait)
+lié à la puissance déclarée"]
+    CHOICE -->|Compteur double flux / communicant| PROP["Tarif prosumer 'proportionnel / réel'
+lié à prélèvement + injection"]
+    noteC{{"Le semi-îlotage aide surtout à :
+↓ prélèvement réseau & ↓ injection
+(donc intéressant en 'proportionnel')"}}
   end
 
   %% ============ NOUVEAUX TARIFS 2026 ============
   subgraph D["Wallonie 2026 — Tarifs de distribution (BT)"]
     TOU["Options : monohoraire / bihoraire / 'Tarif Impact' (ECO-MEDIUM-PIC)"]:::box
-    noteD{{'Tarif Impact' = prix réseau plus élevé en heures PIC<br/>et plus bas en heures ECO (selon option et compteur)}}
+    noteD{{"'Tarif Impact' = prix réseau plus élevé en heures PIC
+et plus bas en heures ECO (selon option et compteur)"}}
   end
 
   classDef box fill:#f6f6f6,stroke:#999,stroke-width:1px;
